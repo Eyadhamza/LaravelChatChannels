@@ -21,4 +21,10 @@ class Participation extends Model
     {
         return $this->belongsToMany(Channel::class);
     }
+
+    public function joinChat($chat)
+    {
+        $chat=Chat::find($chat);
+        return $this->chats()->sync($chat);
+    }
 }
