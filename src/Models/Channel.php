@@ -18,4 +18,8 @@ class Channel extends Model
     {
         return $this->morphMany('TheProfessor\Laravelchatchannels\Models\Message','messagable');
     }
+    public function addMessage($sender,$messageBody)
+    {
+        return $this->messages()->create(['sender_id'=>$sender,'body'=>$messageBody]);
+    }
 }

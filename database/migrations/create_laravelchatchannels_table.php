@@ -41,7 +41,7 @@ class CreateLaravelchatchannelsTable extends Migration
             $table->bigIncrements('id');
             $table->longText('body');
             $table->morphs('messagable');
-            $table->foreignId('participant_id');
+            $table->foreignId('sender_id');
             $table->timestamps();
         });
     }
