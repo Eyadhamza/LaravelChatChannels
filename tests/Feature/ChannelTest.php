@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use TheProfessor\Laravelchatchannels\Models\Channel;
 use TheProfessor\Laravelchatchannels\Models\Chat;
 use TheProfessor\Laravelchatchannels\Models\Message;
-use TheProfessor\Laravelchatchannels\Models\Participation;
+use TheProfessor\Laravelchatchannels\Models\Participant;
 
 
 class ChannelTest extends TestCase
@@ -26,10 +26,10 @@ class ChannelTest extends TestCase
     {
         $channel= factory(Channel::class)->create();
         $channel->each(function ($channel) {
-            $channel->participants()->save(factory(Participation::class)->make());
+            $channel->participants()->save(factory(Participant::class)->make());
         });;
 
-        $this->assertInstanceOf(Participation::class,$channel->participants->first());
+        $this->assertInstanceOf(Participant::class,$channel->participants->first());
     }
     /** @test */
     public function a_channel_can_have_messages()

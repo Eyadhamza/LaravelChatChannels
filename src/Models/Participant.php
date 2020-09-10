@@ -7,7 +7,7 @@ namespace TheProfessor\Laravelchatchannels\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Participation extends Model
+class Participant extends Model
 {
     use HasFactory;
     protected $table='participants';
@@ -26,5 +26,10 @@ class Participation extends Model
     {
         $chat=Chat::find($chat);
         return $this->chats()->sync($chat);
+    }
+    public function joinChannel($channel)
+    {
+        $channel=Channel::find($channel);
+        return $this->channels()->sync($channel);
     }
 }
