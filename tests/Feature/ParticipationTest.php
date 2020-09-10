@@ -44,18 +44,19 @@ class ParticipantTest extends TestCase
         $this->assertCount(1,$participant->channels);
     }
 
-//    /** @test */
-//    public function a_participant_can_send_messages()
-//    {
-//        $participant= factory(Participant::class)->create();
-//
-//        $chat= factory(Chat::class)->create();
-//
-//        $participant->joinChat($chat);
-//        $message=factory(Message::class)->create();
-//        $participant->chat->sendMessage($message);
-//
-//    }
+    /** @test */
+    public function a_participant_can_send_messages_in_chat()
+    {
+        $participant= factory(Participant::class)->create();
+
+        $chat= factory(Chat::class)->create();
+
+        $chatRoom = $participant->joinChat($chat);
+
+//        $message= $participant->sendMessage($chatRoom,'hello');
+
+
+    }
 
 
 }

@@ -19,4 +19,5 @@ class Chat extends Model
     {
         return $this->morphMany('TheProfessor\Laravelchatchannels\Models\Message','messagable');
     }
+
 }

@@ -6,6 +6,7 @@ namespace TheProfessor\Laravelchatchannels\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use function PHPUnit\Framework\isInstanceOf;
 
 class Participant extends Model
 {
@@ -21,15 +22,21 @@ class Participant extends Model
     {
         return $this->belongsToMany(Channel::class);
     }
-
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
     public function joinChat($chat)
     {
         $chat=Chat::find($chat);
-        return $this->chats()->sync($chat);
+        $this->chats()->sync($chat);
+        return $chat;
     }
     public function joinChannel($channel)
     {
         $channel=Channel::find($channel);
-        return $this->channels()->sync($channel);
+        $this->channels()->sync($channel);
+        return $channel;
     }
+
 }

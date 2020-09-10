@@ -26,7 +26,7 @@ class ChatTest extends TestCase
         $chat= factory(Chat::class)->create();
         $chat->each(function ($chat) {
             $chat->participants()->save(factory(Participant::class)->make());
-        });;
+        });
 
         $this->assertInstanceOf(Participant::class,$chat->participants->first());
     }

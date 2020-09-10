@@ -15,4 +15,8 @@ class Message extends Model
         return $this->morphTo();
     }
 
+    public function participant()
+    {
+        return $this->belongsTo(Participant::class);
+    }
 }
