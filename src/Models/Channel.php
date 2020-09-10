@@ -14,5 +14,8 @@ class Channel extends Model
     {
         return $this->belongsToMany(Participation::class, 'channel_participant', 'channel_id', 'participant_id');
     }
-
+    public function messages()
+    {
+        return $this->morphMany('TheProfessor\Laravelchatchannels\Models\Message','messagable');
+    }
 }

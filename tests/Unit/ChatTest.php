@@ -4,6 +4,7 @@ namespace TheProfessor\Laravelchatchannels\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use TheProfessor\Laravelchatchannels\Models\Chat;
+use TheProfessor\Laravelchatchannels\Models\Message;
 use TheProfessor\Laravelchatchannels\Models\Participation;
 
 
@@ -28,5 +29,14 @@ class ChatTest extends TestCase
         });;
 
         $this->assertInstanceOf(Participation::class,$chat->participants->first());
+    }
+    /** @test */
+    public function a_chat_can_have_messages()
+    {
+        $chat= factory(Chat::class)->create();
+        $chat->each(function ($chat) {
+            $chat->messages()->save(factory(Message::class)->make());
+        });;
+        $this->assertInstanceOf(Message::class,$chat->messages->first());
     }
 }
