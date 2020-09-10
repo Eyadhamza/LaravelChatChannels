@@ -1,6 +1,6 @@
 <?php
 
-namespace TheProfessor\LaravelChatChannels\Tests;
+namespace TheProfessor\Laravelchatchannels\Tests;
 
 class ExampleTest extends TestCase
 {

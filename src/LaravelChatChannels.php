@@ -1,7 +1,7 @@
 <?php
 
-namespace TheProfessor\LaravelChatChannels;
+namespace TheProfessor\Laravelchatchannels;
 
-class LaravelChatChannels
+class Laravelchatchannels
 {
 }

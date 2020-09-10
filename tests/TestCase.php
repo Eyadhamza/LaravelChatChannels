@@ -1,9 +1,9 @@
 <?php
 
-namespace TheProfessor\LaravelChatChannels\Tests;
+namespace TheProfessor\Laravelchatchannels\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use TheProfessor\LaravelChatChannels\LaravelChatChannelsServiceProvider;
+use TheProfessor\Laravelchatchannels\LaravelchatchannelsServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -17,7 +17,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            LaravelChatChannelsServiceProvider::class,
+            LaravelchatchannelsServiceProvider::class,
         ];
     }
 
@@ -31,7 +31,7 @@ class TestCase extends Orchestra
         ]);
 
         /*
-        include_once __DIR__.'/../database/migrations/create_Laravel_Chat_Channels_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_laravelchatchannels_table.php.stub';
         (new \CreatePackageTable())->up();
         */
     }

@@ -1,16 +1,16 @@
 <?php
 
-namespace TheProfessor\LaravelChatChannels;
+namespace TheProfessor\Laravelchatchannels;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \TheProfessor\LaravelChatChannels\LaravelChatChannels
+ * @see \TheProfessor\Laravelchatchannels\Laravelchatchannels
  */
-class LaravelChatChannelsFacade extends Facade
+class LaravelchatchannelsFacade extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'Laravel-Chat-Channels';
+        return 'laravelchatchannels';
     }
 }

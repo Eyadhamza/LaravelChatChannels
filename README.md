@@ -1,8 +1,8 @@
-# A laravel package to create simple and very easy chat rooms and channels
+# a simple laravel package to create chats rooms and channels
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/theprofessor/Laravel-Chat-Channels.svg?style=flat-square)](https://packagist.org/packages/theprofessor/Laravel-Chat-Channels)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/theprofessor/Laravel-Chat-Channels/run-tests?label=tests)](https://github.com/theprofessor/Laravel-Chat-Channels/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/theprofessor/Laravel-Chat-Channels.svg?style=flat-square)](https://packagist.org/packages/theprofessor/Laravel-Chat-Channels)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/theprofessor/laravelchatchannels.svg?style=flat-square)](https://packagist.org/packages/theprofessor/laravelchatchannels)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/theprofessor/laravelchatchannels/run-tests?label=tests)](https://github.com/theprofessor/laravelchatchannels/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/theprofessor/laravelchatchannels.svg?style=flat-square)](https://packagist.org/packages/theprofessor/laravelchatchannels)
 
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
@@ -22,19 +22,19 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 You can install the package via composer:
 
 ```bash
-composer require theprofessor/Laravel-Chat-Channels
+composer require theprofessor/laravelchatchannels
 ```
 
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --provider="TheProfessor\LaravelChatChannels\LaravelChatChannelsServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="TheProfessor\Laravelchatchannels\LaravelchatchannelsServiceProvider" --tag="migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 ```bash
-php artisan vendor:publish --provider="TheProfessor\LaravelChatChannels\LaravelChatChannelsServiceProvider" --tag="config"
+php artisan vendor:publish --provider="TheProfessor\Laravelchatchannels\LaravelchatchannelsServiceProvider" --tag="config"
 ```
 
 This is the contents of the published config file:
@@ -47,8 +47,8 @@ return [
 ## Usage
 
 ``` php
-$Laravel-Chat-Channels = new TheProfessor\LaravelChatChannels();
-echo $Laravel-Chat-Channels->echoPhrase('Hello, TheProfessor!');
+$laravelchatchannels = new TheProfessor\Laravelchatchannels();
+echo $laravelchatchannels->echoPhrase('Hello, TheProfessor!');
 ```
 
 ## Testing

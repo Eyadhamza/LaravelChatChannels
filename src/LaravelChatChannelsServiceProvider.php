@@ -1,24 +1,24 @@
 <?php
 
-namespace TheProfessor\LaravelChatChannels;
+namespace TheProfessor\Laravelchatchannels;
 
 use Illuminate\Support\ServiceProvider;
-use TheProfessor\LaravelChatChannels\Commands\LaravelChatChannelsCommand;
+use TheProfessor\Laravelchatchannels\Commands\LaravelchatchannelsCommand;
 
-class LaravelChatChannelsServiceProvider extends ServiceProvider
+class LaravelchatchannelsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/Laravel-Chat-Channels.php' => config_path('Laravel-Chat-Channels.php'),
+                __DIR__ . '/../config/laravelchatchannels.php' => config_path('laravelchatchannels.php'),
             ], 'config');
 
             $this->publishes([
-                __DIR__ . '/../resources/views' => base_path('resources/views/vendor/Laravel-Chat-Channels'),
+                __DIR__ . '/../resources/views' => base_path('resources/views/vendor/laravelchatchannels'),
             ], 'views');
 
-            $migrationFileName = 'create_Laravel_Chat_Channels_table.php';
+            $migrationFileName = 'create_laravelchatchannels_table.php';
             if (! $this->migrationFileExists($migrationFileName)) {
                 $this->publishes([
                     __DIR__ . "/../database/migrations/{$migrationFileName}.stub" => database_path('migrations/' . date('Y_m_d_His', time()) . '_' . $migrationFileName),
@@ -26,16 +26,16 @@ class LaravelChatChannelsServiceProvider extends ServiceProvider
             }
 
             $this->commands([
-                LaravelChatChannelsCommand::class,
+                LaravelchatchannelsCommand::class,
             ]);
         }
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'Laravel-Chat-Channels');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravelchatchannels');
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/Laravel-Chat-Channels.php', 'Laravel-Chat-Channels');
+        $this->mergeConfigFrom(__DIR__ . '/../config/laravelchatchannels.php', 'laravelchatchannels');
     }
 
     public static function migrationFileExists(string $migrationFileName): bool
