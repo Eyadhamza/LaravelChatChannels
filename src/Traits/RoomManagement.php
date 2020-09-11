@@ -16,6 +16,10 @@ trait RoomManagement
     {
         return $this->messages()->create(['sender_id' => $sender,'body' => $messageBody]);
     }
+    public function allMessages()
+    {
+        return $this->messages()->get();
+    }
     public function setParticipants($participants)
     {
         $this->participants()->attach($participants);

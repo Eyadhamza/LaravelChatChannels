@@ -59,14 +59,12 @@ class ChatTest extends TestCase
         $chat->givePermissions($participatable, 'AY HAGTEN');
 
         $this->assertCount(3, $chat->roles);
-        $this->assertDatabaseCount('r_roles',3);
+        $this->assertDatabaseCount('r_roles', 3);
 
         $channel = $participatable->createChannel('my second channel', 'my second description');
         $channel->givePermissions($participatable, 'Admin');
         $channel->givePermissions($participatable, 'hr');
         $this->assertCount(2, $channel->roles);
-
-
     }
     /** @test */
     public function permissions_are_set()
@@ -75,8 +73,8 @@ class ChatTest extends TestCase
         $participatable = $participant->participatable;
         $chat = $participatable->createChat('my new chat', 'my description');
 
-        $role= $chat->givePermissions($participatable, 'Admin','DeleteChat');
+        $role = $chat->givePermissions($participatable, 'Admin', 'DeleteChat');
 
-        $this->assertCount(1,$role->abilities);
+        $this->assertCount(1, $role->abilities);
     }
 }
