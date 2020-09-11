@@ -11,7 +11,7 @@ $factory->define(Participant::class, function (Generator $faker) {
     return [
         'participatable_type'=>'TheProfessor\Laravelchatchannels\Models\User',
         'participatable_id'=>User::create(['name'=>'eyad'])->id,
-
-
+        //only for testing
+        //the package can work on different models
     ];
 });

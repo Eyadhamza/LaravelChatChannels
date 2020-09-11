@@ -40,4 +40,12 @@ class ChannelTest extends TestCase
         });;
         $this->assertInstanceOf(Message::class,$channel->messages->first());
     }
+    /** @test */
+    public function group_of_participants_can_join_to_the_channel()
+    {
+        $channel= factory(Channel::class)->create();
+        $participants=factory(Participant::class,5)->create();
+        $channel->setParticipants($participants);
+        $this->assertCount(5,$channel->participants);
+    }
 }

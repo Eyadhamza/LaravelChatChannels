@@ -22,4 +22,9 @@ class Channel extends Model
     {
         return $this->messages()->create(['sender_id'=>$sender,'body'=>$messageBody]);
     }
+    public function setParticipants($participants)
+    {
+        $this->participants()->attach($participants);
+        return $this;
+    }
 }
