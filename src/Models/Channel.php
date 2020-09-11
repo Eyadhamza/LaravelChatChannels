@@ -3,12 +3,11 @@
 
 namespace TheProfessor\Laravelchatchannels\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model
 {
-    protected $guarded=[];
+    protected $guarded = [];
 
     public function participants()
     {
@@ -16,15 +15,16 @@ class Channel extends Model
     }
     public function messages()
     {
-        return $this->morphMany('TheProfessor\Laravelchatchannels\Models\Message','messagable');
+        return $this->morphMany('TheProfessor\Laravelchatchannels\Models\Message', 'messagable');
     }
-    public function addMessage($sender,$messageBody)
+    public function addMessage($sender, $messageBody)
     {
-        return $this->messages()->create(['sender_id'=>$sender,'body'=>$messageBody]);
+        return $this->messages()->create(['sender_id' => $sender,'body' => $messageBody]);
     }
     public function setParticipants($participants)
     {
         $this->participants()->attach($participants);
+
         return $this;
     }
 }

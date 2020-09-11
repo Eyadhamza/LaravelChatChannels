@@ -4,10 +4,8 @@ namespace TheProfessor\Laravelchatchannels\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use TheProfessor\Laravelchatchannels\Models\Channel;
-use TheProfessor\Laravelchatchannels\Models\Chat;
 use TheProfessor\Laravelchatchannels\Models\Message;
 use TheProfessor\Laravelchatchannels\Models\Participant;
-
 
 class ChannelTest extends TestCase
 {
@@ -16,36 +14,38 @@ class ChannelTest extends TestCase
     /** @test */
     public function migration_is_set()
     {
-       $channel= factory(Channel::class)->create();
+        $channel = factory(Channel::class)->create();
 
-       $this->assertDatabaseCount('channels',1);
+        $this->assertDatabaseCount('channels', 1);
     }
 
     /** @test */
     public function a_channel_can_have_participants()
     {
-        $channel= factory(Channel::class)->create();
+        $channel = factory(Channel::class)->create();
         $channel->each(function ($channel) {
             $channel->participants()->save(factory(Participant::class)->make());
-        });;
+        });
+        ;
 
-        $this->assertInstanceOf(Participant::class,$channel->participants->first());
+        $this->assertInstanceOf(Participant::class, $channel->participants->first());
     }
     /** @test */
     public function a_channel_can_have_messages()
     {
-        $channel= factory(Channel::class)->create();
+        $channel = factory(Channel::class)->create();
         $channel->each(function ($channel) {
             $channel->messages()->save(factory(Message::class)->make());
-        });;
-        $this->assertInstanceOf(Message::class,$channel->messages->first());
+        });
+        ;
+        $this->assertInstanceOf(Message::class, $channel->messages->first());
     }
     /** @test */
     public function group_of_participants_can_join_to_the_channel()
     {
-        $channel= factory(Channel::class)->create();
-        $participants=factory(Participant::class,5)->create();
+        $channel = factory(Channel::class)->create();
+        $participants = factory(Participant::class, 5)->create();
         $channel->setParticipants($participants);
-        $this->assertCount(5,$channel->participants);
+        $this->assertCount(5, $channel->participants);
     }
 }

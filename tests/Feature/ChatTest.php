@@ -3,7 +3,6 @@
 namespace TheProfessor\Laravelchatchannels\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use TheProfessor\Laravelchatchannels\Models\Channel;
 use TheProfessor\Laravelchatchannels\Models\Chat;
 use TheProfessor\Laravelchatchannels\Models\Message;
 use TheProfessor\Laravelchatchannels\Models\Participant;
@@ -43,9 +42,9 @@ class ChatTest extends TestCase
     /** @test */
     public function group_of_participants_can_join_to_the_chat()
     {
-        $chat= factory(Chat::class)->create();
-        $participants=factory(Participant::class,5)->create();
+        $chat = factory(Chat::class)->create();
+        $participants = factory(Participant::class, 5)->create();
         $chat->setParticipants($participants);
-        $this->assertCount(5,$chat->participants);
+        $this->assertCount(5, $chat->participants);
     }
 }
