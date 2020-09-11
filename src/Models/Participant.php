@@ -5,6 +5,7 @@ namespace TheProfessor\Laravelchatchannels\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use TheProfessor\Laravelchatchannels\Traits\Participate;
 
 class Participant extends Model
 {
@@ -12,6 +13,10 @@ class Participant extends Model
     protected $table = 'participants';
     protected $guarded = [];
 
+    public function participatable()
+    {
+        return $this->morphTo();
+    }
     public function chats()
     {
         return $this->belongsToMany(Chat::class);
@@ -24,24 +29,6 @@ class Participant extends Model
     {
         return $this->hasMany(Message::class);
     }
-    public function joinRoom($room)
-    {
-        if ($room instanceof Chat) {
-            $chat = Chat::find($room);
-            $this->chats()->sync($chat);
 
-            return $chat[0];
-        } else {
-            $channel = Channel::find($room);
-            $this->channels()->sync($channel);
 
-            return $channel[0];
-        }
-    }
-
-    public function sendMessage($room, string $message)
-    {
-        $room->addMessage($this->id, $message);
-
-    }
 }

@@ -10,7 +10,7 @@ class CreateLaravelchatchannelsTable extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->bigIncrements('id');
-
+            $table->morphs('participatable');
             $table->timestamps();
         });
         Schema::create('chats', function (Blueprint $table) {
@@ -48,6 +48,13 @@ class CreateLaravelchatchannelsTable extends Migration
             $table->longText('body');
             $table->morphs('messagable');
             $table->foreignId('sender_id');
+            $table->timestamps();
+        });
+
+        //to be deleted only for testing
+        Schema::create('users', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
             $table->timestamps();
         });
     }

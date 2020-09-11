@@ -24,9 +24,14 @@ class ParticipantTest extends TestCase
     {
         $participant = factory(Participant::class)->create();
 
+
+        $participant = Participant::find(1);
+        $participatable = $participant->participatable;
+
         $chat = factory(Chat::class)->create();
 
-        $participant->joinRoom($chat);
+        $participatable->joinRoom($chat);
+
 
         $this->assertCount(1, $participant->chats);
     }
@@ -35,9 +40,10 @@ class ParticipantTest extends TestCase
     {
         $participant = factory(Participant::class)->create();
 
+        $participatable = $participant->participatable;
         $channel = factory(Channel::class)->create();
 
-        $participant->joinRoom($channel);
+        $participatable->joinRoom($channel);
 
         $this->assertCount(1, $participant->channels);
     }
@@ -46,12 +52,12 @@ class ParticipantTest extends TestCase
     public function a_participant_can_send_messages_in_chat()
     {
         $participant = factory(Participant::class)->create();
-
+        $participatable = $participant->participatable;
         $chat = factory(Chat::class)->create();
 
-        $chatRoom = $participant->joinRoom($chat);
+        $chatRoom = $participatable->joinRoom($chat);
 
-        $participant->sendMessage($chatRoom, 'hello');
+        $participatable->sendMessage($chatRoom, 'hello');
 
         $this->assertCount(1, $chatRoom->messages);
     }
@@ -59,12 +65,12 @@ class ParticipantTest extends TestCase
     public function a_participant_can_send_messages_in_channel()
     {
         $participant = factory(Participant::class)->create();
-
+        $participatable = $participant->participatable;
         $channel = factory(Chat::class)->create();
 
-        $channelRoom = $participant->joinRoom($channel);
+        $channelRoom = $participatable->joinRoom($channel);
 
-        $participant->sendMessage($channelRoom, 'hello');
+        $participatable->sendMessage($channelRoom, 'hello');
 
         $this->assertCount(1, $channelRoom->messages);
     }
