@@ -6,7 +6,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use TheProfessor\Laravelchatchannels\Models\Channel;
 use TheProfessor\Laravelchatchannels\Models\Chat;
 use TheProfessor\Laravelchatchannels\Models\Participant;
-use TheProfessor\Laravelchatchannels\Models\User;
 
 class ParticipantTest extends TestCase
 {
@@ -15,7 +14,6 @@ class ParticipantTest extends TestCase
     /** @test */
     public function migration_is_set()
     {
-
         $participant = factory(Participant::class)->create();
 
         $this->assertDatabaseCount('participants', 1);
@@ -75,5 +73,23 @@ class ParticipantTest extends TestCase
         $participatable->sendMessage($channelRoom, 'hello');
 
         $this->assertCount(1, $channelRoom->messages);
+    }
+    /** @test */
+    public function participant_can_make_chat()
+    {
+        $participant = factory(Participant::class)->create();
+        $participatable = $participant->participatable;
+        $participatable->createChat('my new chat', 'my description');
+
+        $this->assertCount(1, $participatable->allChats());
+    }
+    /** @test */
+    public function participant_can_make_channel()
+    {
+        $participant = factory(Participant::class)->create();
+        $participatable = $participant->participatable;
+        $participatable->createChat('my new channel', 'my description');
+
+        $this->assertCount(1, $participatable->allChats());
     }
 }

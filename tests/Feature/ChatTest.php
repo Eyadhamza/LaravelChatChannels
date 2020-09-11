@@ -47,4 +47,5 @@ class ChatTest extends TestCase
         $chat->setParticipants($participants);
         $this->assertCount(5, $chat->participants);
     }
+
 }
