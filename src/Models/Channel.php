@@ -27,4 +27,10 @@ class Channel extends Model
 
         return $this;
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(RoomRoles::class,'channel_role','channel_id','r_role_id');
+    }
+
 }

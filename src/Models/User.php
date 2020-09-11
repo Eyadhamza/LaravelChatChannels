@@ -10,16 +10,6 @@ class User extends Model
 {
     use Participate;
     protected $guarded = [];
+    //just for testing
 
-    public function trying()
-    {
-        $user=User::create(['name'=>'asdasdasd']);
-        $chat=factory(Chat::class)->create();
-
-        $user->joinRoom($chat);
-
-        //till here all works as expected
-        return $user->Allchats();
-
-    }
 }

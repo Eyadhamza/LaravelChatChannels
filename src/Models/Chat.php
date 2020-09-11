@@ -26,4 +26,8 @@ class Chat extends Model
         $this->participants()->attach($participants);
         return $this;
     }
+    public function roles()
+    {
+        return $this->belongsToMany(RoomRoles::class,'chat_role','chat_id','r_role_id');
+    }
 }
