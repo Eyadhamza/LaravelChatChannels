@@ -17,18 +17,14 @@ class CreateLaravelchatchannelsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
-            $table->boolean('isAdmin')->default('false');
-            $table->boolean('isSeen')->default('false');
-            $table->boolean('isSender')->default('false');
+
             $table->timestamps();
         });
         Schema::create('channels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
-            $table->boolean('isAdmin')->default('false');
-            $table->boolean('isSeen')->default('false');
-            $table->boolean('isSender')->default('false');
+
             $table->timestamps();
         });
         Schema::create('chat_participant', function (Blueprint $table) {

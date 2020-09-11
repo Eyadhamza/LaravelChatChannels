@@ -31,7 +31,7 @@ class TestCase extends Orchestra
         ]);
 
 
-        include_once __DIR__.'/../database/migrations/create_laravelchatchannels_table.php';
+        include_once __DIR__ . '/../database/migrations/create_laravelchatchannels_table.php.stub';
         (new \CreateLaravelchatchannelsTable())->up();
 
     }

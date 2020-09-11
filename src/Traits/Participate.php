@@ -26,14 +26,15 @@ trait Participate
 
     public function joinRoom($room)
     {
+
         if ($room instanceof Chat) {
             $chat = Chat::find($room);
-            $this->createNewParticipant()->chats()->sync($chat);
+            $this->createNewParticipant()->chats()->syncWithoutDetaching($chat);
 
             return $chat[0];
         } else {
             $channel = Channel::find($room);
-            $this->createNewParticipant()->channels()->sync($channel);
+            $this->createNewParticipant()->channels()->syncWithoutDetaching($channel);
 
             return $channel[0];
         }
