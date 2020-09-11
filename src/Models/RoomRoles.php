@@ -16,10 +16,10 @@ class RoomRoles extends Model
     }
     public function seedAbilities()
     {
-         RoomAbilities::insert([
-            ['title'=>'DeleteChat'],
-            ['title'=>'EditChat'],
-            ['title'=>'ViewChat'],
+        RoomAbilities::insert([
+            ['title' => 'DeleteChat'],
+            ['title' => 'EditChat'],
+            ['title' => 'ViewChat'],
         ]);
     }
     public function chats()
@@ -37,6 +37,5 @@ class RoomRoles extends Model
         }
 
         $this->abilities()->sync($ability, false);
-
     }
 }

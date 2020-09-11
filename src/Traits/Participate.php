@@ -38,7 +38,7 @@ trait Participate
 
     public function sendMessage($room, string $message)
     {
-        $room->addMessage($this->asParticipant()->id, $message);
+        return $room->addMessage($this->asParticipant()->id, $message);
     }
     public function allChats()
     {
