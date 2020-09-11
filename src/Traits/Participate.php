@@ -11,7 +11,7 @@ trait Participate
 {
 
 
-    public function createNewParticipant()
+    public function asParticipant()
     {
         return Participant::firstOrCreate([
             'participatable_type'=>class_basename($this),
@@ -29,12 +29,11 @@ trait Participate
 
         if ($room instanceof Chat) {
             $chat = Chat::find($room);
-            $this->createNewParticipant()->chats()->syncWithoutDetaching($chat);
-
+            $this->asParticipant()->chats()->syncWithoutDetaching($chat);
             return $chat[0];
         } else {
             $channel = Channel::find($room);
-            $this->createNewParticipant()->channels()->syncWithoutDetaching($channel);
+            $this->asParticipant()->channels()->syncWithoutDetaching($channel);
 
             return $channel[0];
         }
@@ -42,16 +41,16 @@ trait Participate
 
     public function sendMessage($room, string $message)
     {
-        $room->addMessage($this->id, $message);
+        $room->addMessage($this->asParticipant()->id, $message);
     }
     public function allChats()
     {
 
-        return $this->createNewParticipant()->chats()->get();
+        return $this->asParticipant()->chats()->get();
     }
     public function allChannels()
     {
 
-        return $this->createNewParticipant()->channels()->get();
+        return $this->asParticipant()->channels()->get();
     }
 }
