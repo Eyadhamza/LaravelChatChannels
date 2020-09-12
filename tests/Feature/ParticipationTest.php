@@ -128,6 +128,6 @@ class ParticipantTest extends TestCase
         $ability = 'DeleteChat';
         $this->actingAs($notAdmin);
         $this->assertFalse(Gate::forUser($notAdmin)->allows($ability, $chat));
-        $this->assertCount(0,$notAdmin->getAllParticipantAbilities($chat));
+        $this->assertCount(0, $notAdmin->getAllParticipantAbilities($chat));
     }
 }

@@ -5,7 +5,6 @@ namespace TheProfessor\Laravelchatchannels\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use TheProfessor\Laravelchatchannels\Traits\Participate;
 
 class Participant extends Model
 {
@@ -29,6 +28,4 @@ class Participant extends Model
     {
         return $this->hasMany(Message::class);
     }
-
-
 }

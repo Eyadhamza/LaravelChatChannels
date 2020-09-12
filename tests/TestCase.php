@@ -19,7 +19,7 @@ class TestCase extends Orchestra
     {
         return [
             LaravelchatchannelsServiceProvider::class,
-            AuthServiceProvider::class
+            AuthServiceProvider::class,
         ];
     }
 
