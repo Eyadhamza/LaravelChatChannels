@@ -77,4 +77,29 @@ class ChatTest extends TestCase
 
         $this->assertCount(1, $role->abilities);
     }
+    /** @test */
+    public function get_all_participant_of_this_room_or_certain_room()
+    {
+        $participant = factory(Participant::class)->create();
+        $participatable = $participant->participatable;
+        $chat = $participatable->createChat('my new chat', 'my description');
+
+        $this->assertCount(1, $chat->getAllParticipants());
+
+        $this->assertCount(1, (new Chat)->getAllParticipants($chat));
+    }
+    /** @test */
+    public function get_message_of_this_or_certain_message()
+    {
+        $participant = factory(Participant::class)->create();
+        $participatable = $participant->participatable;
+        $chat = $participatable->createChat('my new chat', 'my description');
+        $chat->each(function ($chat) {
+            $chat->messages()->save(factory(Message::class)->make());
+        });
+        $message = Message::find(1);
+
+        $chat->getMessage($message->body);
+        $this->assertDatabaseCount('messages', 1);
+    }
 }

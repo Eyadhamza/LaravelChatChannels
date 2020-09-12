@@ -20,13 +20,22 @@ trait RoomManagement
     {
         return $this->messages()->get();
     }
+    public function getMessage($message)
+    {
+        return $this->messages()->where('body' ,'like', "%{$message}%")->get()[0];
+    }
     public function setParticipants($participants)
     {
         $this->participants()->attach($participants);
 
         return $this;
     }
+    public function getAllParticipants($room=null)
+    {
+        $participants = $room ? $room->participants :$this->participants;
 
+        return $participants ;
+    }
     public function givePermissions($participant, string $roleTitle, $ability = [])
     {
 

@@ -47,9 +47,8 @@ trait Participate
     public function getParticipantChat($chat)
     {
         return $this->asParticipant()->chats()->where('chat_id',$chat->id)->get()[0];
-
-
     }
+
     public function allChannels()
     {
         return $this->asParticipant()->channels()->get();
@@ -57,8 +56,6 @@ trait Participate
     public function getParticipantChannel($channel)
     {
         return $this->asParticipant()->channels()->where('channel_id',$channel->id)->get()[0];
-
-
     }
     public function createChat(string $chatName, string $chatDescription)
     {
