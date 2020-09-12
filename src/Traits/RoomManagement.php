@@ -21,7 +21,7 @@ trait RoomManagement
     }
     public function getMessage($message)
     {
-        return $this->messages()->where('body' ,'like', "%{$message}%")->get()[0];
+        return $this->messages()->where('body', 'like', "%{$message}%")->get()[0];
     }
     public function setParticipants($participants)
     {
@@ -29,7 +29,7 @@ trait RoomManagement
 
         return $this;
     }
-    public function getAllParticipants($room=null)
+    public function getAllParticipants($room = null)
     {
         $participants = $room ? $room->participants :$this->participants;
 
