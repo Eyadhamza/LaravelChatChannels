@@ -3,7 +3,6 @@
 
 namespace TheProfessor\Laravelchatchannels\Traits;
 
-use TheProfessor\Laravelchatchannels\Models\RoomAbilities;
 use TheProfessor\Laravelchatchannels\Models\RoomRoles;
 
 trait RoomManagement
@@ -29,7 +28,6 @@ trait RoomManagement
 
     public function givePermissions($participant, string $roleTitle, $ability = [])
     {
-
         $role = $participant->addRole($roleTitle, $this);
 
         (new RoomRoles())->seedAbilities();

@@ -46,9 +46,7 @@ trait Participate
     }
     public function getParticipantChat($chat)
     {
-        return $this->asParticipant()->chats()->where('chat_id',$chat->id)->get()[0];
-
-
+        return $this->asParticipant()->chats()->where('chat_id', $chat->id)->get()[0];
     }
     public function allChannels()
     {
@@ -56,9 +54,7 @@ trait Participate
     }
     public function getParticipantChannel($channel)
     {
-        return $this->asParticipant()->channels()->where('channel_id',$channel->id)->get()[0];
-
-
+        return $this->asParticipant()->channels()->where('channel_id', $channel->id)->get()[0];
     }
     public function createChat(string $chatName, string $chatDescription)
     {
@@ -81,18 +77,17 @@ trait Participate
     public function addRole($roleTitle, $room)
     {
         if ($room instanceof Chat) {
-        return $this->getParticipantChat($room)->roles()->create([
+            return $this->getParticipantChat($room)->roles()->create([
             'title' => $roleTitle,
           ]);
-        }
-        else{
-          return  $this->getParticipantChannel($room)->roles()->create([
+        } else {
+            return  $this->getParticipantChannel($room)->roles()->create([
                 'title' => $roleTitle,
             ]);
         }
     }
     public function getAllParticipantAbilities($chat)
     {
-       return $this->getParticipantChat($chat)->allAbilities();
+        return $this->getParticipantChat($chat)->allAbilities();
     }
 }
