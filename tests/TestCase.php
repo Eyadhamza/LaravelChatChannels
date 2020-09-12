@@ -3,6 +3,7 @@
 namespace TheProfessor\Laravelchatchannels\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
+use TheProfessor\Laravelchatchannels\AuthServiceProvider;
 use TheProfessor\Laravelchatchannels\LaravelchatchannelsServiceProvider;
 
 class TestCase extends Orchestra
@@ -18,6 +19,7 @@ class TestCase extends Orchestra
     {
         return [
             LaravelchatchannelsServiceProvider::class,
+            AuthServiceProvider::class
         ];
     }
 

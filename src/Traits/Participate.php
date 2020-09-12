@@ -91,4 +91,8 @@ trait Participate
             ]);
         }
     }
+    public function getAllParticipantAbilities($chat)
+    {
+       return $this->getParticipantChat($chat)->allAbilities();
+    }
 }
