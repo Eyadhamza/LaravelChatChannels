@@ -19,5 +19,4 @@ class Chat extends Model
     {
         return $this->belongsToMany(RoomRoles::class, 'chat_role', 'chat_id', 'r_role_id');
     }
-
 }

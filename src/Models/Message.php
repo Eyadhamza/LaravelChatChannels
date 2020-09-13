@@ -16,13 +16,12 @@ class Message extends Model
 
     public function participant()
     {
-
         return $this->belongsTo(Participant::class);
     }
 
     public function getSender($id)
     {
-        $participant=Participant::where('id',$id)->get()->first();
+        $participant = Participant::where('id', $id)->get()->first();
 
         return $participant;
     }
