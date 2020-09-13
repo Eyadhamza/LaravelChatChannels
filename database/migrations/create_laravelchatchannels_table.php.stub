@@ -17,14 +17,14 @@ class CreateLaravelchatchannelsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
-
+            $table->string('image')->nullable();
             $table->timestamps();
         });
         Schema::create('channels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
-
+            $table->string('image')->nullable();;
             $table->timestamps();
         });
         Schema::create('chat_participant', function (Blueprint $table) {
@@ -74,13 +74,7 @@ class CreateLaravelchatchannelsTable extends Migration
             $table->foreignId('r_role_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
-        Schema::create('messages', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->longText('body');
-            $table->morphs('messagable');
-            $table->foreignId('sender_id');
-            $table->timestamps();
-        });
+
 
     }
 }
