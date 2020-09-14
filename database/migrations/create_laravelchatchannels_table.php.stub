@@ -42,6 +42,7 @@ class CreateLaravelchatchannelsTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->longText('body');
+            $table->string('filename')->nullable();
             $table->morphs('messagable');
             $table->foreignId('sender_id');
             $table->timestamps();
