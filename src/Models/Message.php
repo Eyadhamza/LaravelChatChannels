@@ -8,8 +8,6 @@ use Livewire\WithFileUploads;
 
 class Message extends Model
 {
-
-
     protected $guarded = [];
 
 
