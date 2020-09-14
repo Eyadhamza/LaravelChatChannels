@@ -27,13 +27,13 @@ trait RoomManagement
     public function setParticipants($participants)
     {
         $this->participants()->attach($participants);
-        $participants->each(function ($participant)
-        {
+        $participants->each(function ($participant) {
             Participant::create([
-                'participatable_type'=>class_basename($participant),
-                'participatable_id'=>$participant->id
+                'participatable_type' => 'App/Models/'.class_basename($participant),
+                'participatable_id' => $participant->id,
             ]);
         });
+
         return $this;
     }
     public function getAllParticipants($room = null)
@@ -59,5 +59,4 @@ trait RoomManagement
             ->map->abilities
             ->flatten()->pluck('title')->unique();
     }
-
 }

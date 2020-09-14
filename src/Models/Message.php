@@ -22,7 +22,7 @@ class Message extends Model
 
     public function getSender($id)
     {
-        $participant=Participant::where('id',$id)->get()->first();
+        $participant = Participant::where('id', $id)->get()->first();
 
 
         return $participant;
