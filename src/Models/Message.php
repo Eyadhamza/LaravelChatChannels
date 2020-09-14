@@ -9,6 +9,7 @@ class Message extends Model
 {
     protected $guarded = [];
 
+
     public function messagable()
     {
         return $this->morphTo();
@@ -16,7 +17,6 @@ class Message extends Model
 
     public function participant()
     {
-
         return $this->belongsTo(Participant::class);
     }
 
@@ -24,12 +24,8 @@ class Message extends Model
     {
         $participant=Participant::where('id',$id)->get()->first();
 
+
         return $participant;
     }
-//    public function sender($value)
-//    {
-//        $participant=Participant::where('id',$value)->get()[0];
-//        dd($participant->participatable);
-//        return $participant;
-//    }
+
 }

@@ -30,7 +30,7 @@ trait RoomManagement
         $participants->each(function ($participant)
         {
             Participant::create([
-                'participatable_type'=>'App/Models/'.class_basename($participant),
+                'participatable_type'=>class_basename($participant),
                 'participatable_id'=>$participant->id
             ]);
         });
