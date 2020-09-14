@@ -12,9 +12,12 @@ trait RoomManagement
     {
         return $this->morphMany('TheProfessor\Laravelchatchannels\Models\Message', 'messagable');
     }
-    public function addMessage($sender, $messageBody)
+    public function addMessage($sender, $messageBody,$images=null,$filenames=null)
     {
-        return $this->messages()->create(['sender_id' => $sender,'body' => $messageBody]);
+       return $this
+            ->messages()
+            ->create(['sender_id' => $sender,'body' => $messageBody,'images'=>$images,'filenames'=>$filenames]);
+
     }
     public function allMessages()
     {
