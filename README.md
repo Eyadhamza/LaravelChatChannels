@@ -123,6 +123,10 @@ $body= $this->validate([
         }
 
         $message=$this->chat->addMessage(auth()->user()->id,$body['messageBody'],json_encode($data));
+        
+ //files works in the same way using the forth parameter
+$user->sendMessage($chat,$message,null,$FileNames);
+
 ```
 for determing roles and abilities (in the chat itself of course)
 *dont worry there won't be any contradictions with any table permissions in the app
