@@ -31,21 +31,14 @@ trait Participate
 
     public function sendMessage($room, string $message)
     {
-
-        if ($room->isChannel){
-
-            if (Gate::forUser(auth()->user())->allows('SendMessage', $room)){
-
+        if ($room->isChannel) {
+            if (Gate::forUser(auth()->user())->allows('SendMessage', $room)) {
                 return $room->addMessage($this->asParticipant()->id, $message);
-            }
-            else{
-
+            } else {
                 return 403;
             }
-        }
-        else{
+        } else {
             return $room->addMessage($this->asParticipant()->id, $message);
-
         }
     }
     public function allRooms()
@@ -57,25 +50,25 @@ trait Participate
         return $this->asParticipant()->rooms()->where('room_id', $room->id)->get()[0];
     }
 
-    public function createRoom(string $roomName, string $roomDescription,bool $isChannel=false)
+    public function createRoom(string $roomName, string $roomDescription, bool $isChannel = false)
     {
         $room = $this->asParticipant()->rooms()->create([
             'name' => $roomName,
             'description' => $roomDescription,
-            'isChannel'=>$isChannel
+            'isChannel' => $isChannel,
         ]);
-        $role=$room->giveRole($this,'Owner');
+        $role = $room->giveRole($this, 'Owner');
         $room->givePermissions($ability = 'DeleteRoom');
 
 
         return $room;
     }
-    public function createRoomWithoutOwner(string $roomName, string $roomDescription,bool $isChannel=false)
+    public function createRoomWithoutOwner(string $roomName, string $roomDescription, bool $isChannel = false)
     {
         $room = $this->asParticipant()->rooms()->create([
             'name' => $roomName,
             'description' => $roomDescription,
-            'isChannel'=>$isChannel
+            'isChannel' => $isChannel,
         ]);
 
         return $room;
@@ -84,7 +77,6 @@ trait Participate
 
     public function addRole($roleTitle, $room)
     {
-
         return $this->getParticipantRoom($room)->roles()->create([
             'title' => $roleTitle,
         ]);

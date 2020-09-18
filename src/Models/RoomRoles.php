@@ -16,15 +16,15 @@ class RoomRoles extends Model
     }
     public function seedAbilities()
     {
-        $abilities=['EditRoom','DeleteRoom','ViewRoom','SendMessage'];
-        foreach ($abilities as $ability){
+        $abilities = ['EditRoom','DeleteRoom','ViewRoom','SendMessage'];
+        foreach ($abilities as $ability) {
             RoomAbilities::insert([
                 ['title' => $ability],
 
             ]);
         }
-        return $abilities;
 
+        return $abilities;
     }
     public function rooms()
     {

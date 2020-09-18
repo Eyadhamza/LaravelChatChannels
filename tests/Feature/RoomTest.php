@@ -3,9 +3,9 @@
 namespace TheProfessor\Laravelrooms\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use TheProfessor\Laravelrooms\Models\Room;
 use TheProfessor\Laravelrooms\Models\Message;
 use TheProfessor\Laravelrooms\Models\Participant;
+use TheProfessor\Laravelrooms\Models\Room;
 
 class RoomTest extends TestCase
 {
@@ -110,9 +110,9 @@ class RoomTest extends TestCase
         $participatable = $participant->participatable;
         $room = $participatable->createRoom('my new room', 'my description');
         $room->makePublic();
-        $this->assertEquals('Public',$room->visibility);
+        $this->assertEquals('Public', $room->visibility);
         $room->makePrivate();
-        $this->assertEquals('Private',$room->visibility);
+        $this->assertEquals('Private', $room->visibility);
     }
 //    /** @test */
 //    public function global_search_for_rooms()
@@ -122,7 +122,6 @@ class RoomTest extends TestCase
     /** @test */
     public function channel_settings_for_users()
     {
-
         $participant = factory(Participant::class)->create();
         $admin = $participant->participatable;
         $this->actingAs($admin);

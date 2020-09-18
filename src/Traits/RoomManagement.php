@@ -4,7 +4,6 @@
 namespace TheProfessor\Laravelrooms\Traits;
 
 use TheProfessor\Laravelrooms\Models\Participant;
-use TheProfessor\Laravelrooms\Models\RoomAbilities;
 use TheProfessor\Laravelrooms\Models\RoomRoles;
 
 trait RoomManagement
@@ -37,7 +36,6 @@ trait RoomManagement
                 'participatable_type' => class_basename($participant),
                 'participatable_id' => $participant->id,
             ]);
-
         });
 
         return $this;
@@ -55,17 +53,18 @@ trait RoomManagement
     public function giveRole($participant, string $roleTitle):RoomRoles
     {
         $this->role = $participant->addRole($roleTitle, $this);
+
         return $this->role;
     }
     public function givePermissions($ability = [])
     {
         $this->role->allowTo($ability);
+
         return $this->role;
     }
 
     public function allAbilities()
     {
-
         return $this->roles
             ->map->abilities
             ->flatten()->pluck('title')->unique();
@@ -92,13 +91,12 @@ trait RoomManagement
 
     public function channelAdmin():bool
     {
-        $participant=Participant::where('id',auth()->id())->get()[0];
+        $participant = Participant::where('id', auth()->id())->get()[0];
 
         $admin = $participant->participatable;
 
-        $adminRoles=$admin->getAllParticipantRoles($this)[0];
+        $adminRoles = $admin->getAllParticipantRoles($this)[0];
 
-        return $adminRoles->contains('Admin')||$adminRoles->contains('Owner');
-
+        return $adminRoles->contains('Admin') || $adminRoles->contains('Owner');
     }
 }
