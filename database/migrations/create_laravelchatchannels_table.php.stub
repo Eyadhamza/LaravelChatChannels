@@ -17,6 +17,7 @@ class CreateLaravelchatchannelsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
+            $table->enum('visibility',['Private','Public'])->default('Private');
             $table->string('image')->nullable();
             $table->timestamps();
         });
@@ -24,6 +25,7 @@ class CreateLaravelchatchannelsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
+            $table->enum('visibility',['Private','Public'])->default('Private');
             $table->string('image')->nullable();;
             $table->timestamps();
         });

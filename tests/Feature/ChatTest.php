@@ -102,4 +102,20 @@ class ChatTest extends TestCase
         $chat->getMessage($message->body);
         $this->assertDatabaseCount('messages', 1);
     }
+    /** @test */
+    public function Private_Public_room_is_set()
+    {
+        $participant = factory(Participant::class)->create();
+        $participatable = $participant->participatable;
+        $chat = $participatable->createChat('my new chat', 'my description');
+        $chat->makePublic();
+        $this->assertEquals('Public',$chat->visibility);
+        $chat->makePrivate();
+        $this->assertEquals('Private',$chat->visibility);
+    }
+    /** @test */
+    public function global_search_for_rooms()
+    {
+
+    }
 }
