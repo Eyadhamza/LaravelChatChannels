@@ -104,17 +104,19 @@ class ParticipantTest extends TestCase
 
         $room->setParticipants($participants);
 
-        $room->givePermissions($admin, 'Admin', $ability = 'DeleteRoom');
+        $role=$room->giveRole($admin,'Admin');
+        $room->givePermissions($ability = 'DeleteRoom');
 
         $this->assertCount(1, $admin->getAllParticipantAbilities($room));
         $this->actingAs($admin);
 
         $this->assertTrue(Gate::forUser($admin)->allows($ability, $room));
 
-        $room->givePermissions($admin, 'Admin', $ability2 = 'EditRoom');
 
+        $role=$room->giveRole($admin,'Admin');
+        $room->givePermissions($ability = 'EditRoom');
         $this->assertCount(2, $admin->getAllParticipantAbilities($room));
-        $this->assertTrue(Gate::forUser($admin)->allows($ability2, $room));
+        $this->assertTrue(Gate::forUser($admin)->allows($ability, $room));
     }
     /** @test */
 //
@@ -149,9 +151,10 @@ class ParticipantTest extends TestCase
         $participant = factory(Participant::class)->create();
         $admin = $participant->participatable;
         $room=$admin->createRoom('my new channel', 'my description',true);
-        $role='Admin';
-        $room->givePermissions($admin, $role, $role->seedAbilities());
+        $role=$room->giveRole($admin,'Admin');
+        $room->givePermissions($room->seedAbilities());
         $message= $admin->sendMessage($room,'asdasd');
+
         dd($room->roles
             ->map->abilities->flatten()->pluck('title')->unique());
         dd($admin->getAllParticipantAbilities($room));

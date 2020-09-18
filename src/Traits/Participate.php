@@ -66,8 +66,9 @@ trait Participate
             'description' => $roomDescription,
             'isChannel'=>$isChannel
         ]);
+        $role=$room->giveRole($this,'Owner');
+        $room->givePermissions($ability = 'DeleteRoom');
 
-        $room->givePermissions($this,'Owner');
 
         return $room;
     }

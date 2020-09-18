@@ -16,7 +16,7 @@ class RoomRoles extends Model
     }
     public function seedAbilities()
     {
-        $abilities=['DeleteRoom','EditRoom','ViewRoom','SendMessage'];
+        $abilities=['EditRoom','DeleteRoom','ViewRoom','SendMessage'];
         foreach ($abilities as $ability){
             RoomAbilities::insert([
                 ['title' => $ability],
@@ -36,6 +36,7 @@ class RoomRoles extends Model
     }
     public function allowTo($ability)
     {
+        $this->seedAbilities();
         if (is_string($ability)) {
             $ability = RoomAbilities::whereTitle($ability)->firstOrFail();
         }

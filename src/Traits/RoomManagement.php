@@ -4,10 +4,12 @@
 namespace TheProfessor\Laravelrooms\Traits;
 
 use TheProfessor\Laravelrooms\Models\Participant;
+use TheProfessor\Laravelrooms\Models\RoomAbilities;
 use TheProfessor\Laravelrooms\Models\RoomRoles;
 
 trait RoomManagement
 {
+    public $role;
 
     public function messages()
     {
@@ -40,23 +42,25 @@ trait RoomManagement
 
         return $this;
     }
+    public function seedAbilities()
+    {
+        $this->role->seedAbilities();
+    }
     public function getAllParticipants($room = null)
     {
         $participants = $room ? $room->participants :$this->participants;
 
         return $participants ;
     }
-    public function givePermissions($participant, string $roleTitle, $ability = [])
+    public function giveRole($participant, string $roleTitle):RoomRoles
     {
-
-        $role = $participant->addRole($roleTitle, $this);
-
-        $allAbilities=(new RoomRoles())->seedAbilities();
-
-
-            $role->allowTo($ability);
-
-        return $role;
+        $this->role = $participant->addRole($roleTitle, $this);
+        return $this->role;
+    }
+    public function givePermissions($ability = [])
+    {
+        $this->role->allowTo($ability);
+        return $this->role;
     }
 
     public function allAbilities()
