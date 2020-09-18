@@ -1,7 +1,7 @@
 <?php
 
 
-namespace TheProfessor\Laravelchatchannels\Models;
+namespace TheProfessor\Laravelrooms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

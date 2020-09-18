@@ -1,7 +1,7 @@
 <?php
 
 
-namespace TheProfessor\Laravelchatchannels\Models;
+namespace TheProfessor\Laravelrooms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,18 +17,18 @@ class RoomRoles extends Model
     public function seedAbilities()
     {
         RoomAbilities::insert([
-            ['title' => 'DeleteChat'],
-            ['title' => 'EditChat'],
-            ['title' => 'ViewChat'],
+            ['title' => 'DeleteRoom'],
+            ['title' => 'EditRoom'],
+            ['title' => 'ViewRoom'],
         ]);
     }
-    public function chats()
+    public function rooms()
     {
-        return $this->belongsToMany(RoomRoles::class, 'chat_role', 'r_role_id', 'chat_id');
+        return $this->belongsToMany(RoomRoles::class, 'room_role', 'r_role_id', 'room_id');
     }
     public function channels()
     {
-        return $this->belongsToMany(RoomRoles::class, 'channel_role', 'r_role_id', 'chat_id');
+        return $this->belongsToMany(RoomRoles::class, 'channel_role', 'r_role_id', 'room_id');
     }
     public function allowTo($ability)
     {

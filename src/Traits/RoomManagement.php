@@ -1,16 +1,16 @@
 <?php
 
 
-namespace TheProfessor\Laravelchatchannels\Traits;
+namespace TheProfessor\Laravelrooms\Traits;
 
-use TheProfessor\Laravelchatchannels\Models\Participant;
-use TheProfessor\Laravelchatchannels\Models\RoomRoles;
+use TheProfessor\Laravelrooms\Models\Participant;
+use TheProfessor\Laravelrooms\Models\RoomRoles;
 
 trait RoomManagement
 {
     public function messages()
     {
-        return $this->morphMany('TheProfessor\Laravelchatchannels\Models\Message', 'messagable');
+        return $this->morphMany('TheProfessor\Laravelrooms\Models\Message', 'messagable');
     }
     public function addMessage($sender, $messageBody, $images = null, $filenames = null)
     {
@@ -60,5 +60,15 @@ trait RoomManagement
         return $this->roles
             ->map->abilities
             ->flatten()->pluck('title')->unique();
+    }
+    public function makePublic()
+    {
+        $this->visibility='Public';
+        return $this;
+    }
+    public function makePrivate()
+    {
+        $this->visibility='Private';
+        return $this;
     }
 }

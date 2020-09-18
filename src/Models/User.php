@@ -1,10 +1,11 @@
 <?php
 
 
-namespace TheProfessor\Laravelchatchannels\Models;
+namespace TheProfessor\Laravelrooms\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use TheProfessor\Laravelchatchannels\Traits\Participate;
+use TheProfessor\Laravelrooms\Traits\Participate;
+
 
 class User extends Authenticatable
 {

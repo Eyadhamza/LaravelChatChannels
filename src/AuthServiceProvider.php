@@ -1,6 +1,6 @@
 <?php
 
-namespace TheProfessor\Laravelchatchannels;
+namespace TheProfessor\Laravelrooms;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -25,8 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function ($participant, $ability, $chat) {
-            if ($participant->getParticipantChat($chat[0])->allAbilities()->contains($ability)) {
+        Gate::before(function ($participant, $ability, $room) {
+            if ($participant->getParticipantRoom($room[0])->allAbilities()->contains($ability)) {
                 return true;
             }
         });

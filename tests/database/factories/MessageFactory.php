@@ -1,8 +1,8 @@
 <?php
 
 use \Faker\Generator;
-use TheProfessor\Laravelchatchannels\Models\Message;
-use TheProfessor\Laravelchatchannels\Models\Participant;
+use TheProfessor\Laravelrooms\Models\Message;
+use TheProfessor\Laravelrooms\Models\Participant;
 
 /* @var Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Message::class, function (Generator $faker) {

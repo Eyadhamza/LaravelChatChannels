@@ -1,12 +1,12 @@
 <?php
 
-namespace TheProfessor\Laravelchatchannels\Commands;
+namespace TheProfessor\Laravelrooms\Commands;
 
 use Illuminate\Console\Command;
 
-class LaravelchatchannelsCommand extends Command
+class LaravelroomsCommand extends Command
 {
-    public $signature = 'laravelchatchannels';
+    public $signature = 'laravelrooms';
 
     public $description = 'My command';
 

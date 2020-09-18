@@ -1,11 +1,11 @@
 {
-    "name": "theprofessor/laravelchatchannels",
+    "name": "theprofessor/laravelrooms",
     "description": "a simple laravel package to create chats rooms and channels",
     "keywords": [
         "theprofessor",
-        "laravelchatchannels"
+        "laravelrooms"
     ],
-    "homepage": "https://github.com/theprofessor/laravelchatchannels",
+    "homepage": "https://github.com/theprofessor/laravelrooms",
     "license": "MIT",
     "authors": [
         {
@@ -29,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "TheProfessor\\Laravelchatchannels\\": "src"
+            "TheProfessor\\Laravelrooms\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "TheProfessor\\Laravelchatchannels\\Tests\\": "tests"
+            "TheProfessor\\Laravelrooms\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -49,10 +49,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "TheProfessor\\Laravelchatchannels\\LaravelchatchannelsServiceProvider"
+                "TheProfessor\\Laravelrooms\\LaravelroomsServiceProvider"
             ],
             "aliases": {
-                "Laravelchatchannels": "TheProfessor\\Laravelchatchannels\\LaravelchatchannelsFacade"
+                "Laravelrooms": "TheProfessor\\Laravelrooms\\LaravelroomsFacade"
             }
         }
     },

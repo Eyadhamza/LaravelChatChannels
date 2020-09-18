@@ -1,12 +1,11 @@
 <?php
 
-namespace TheProfessor\Laravelchatchannels\Tests;
+namespace TheProfessor\Laravelrooms\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Gate;
-use TheProfessor\Laravelchatchannels\Models\Channel;
-use TheProfessor\Laravelchatchannels\Models\Chat;
-use TheProfessor\Laravelchatchannels\Models\Participant;
+use TheProfessor\Laravelrooms\Models\Room;
+use TheProfessor\Laravelrooms\Models\Participant;
 
 class ParticipantTest extends TestCase
 {
@@ -29,12 +28,12 @@ class ParticipantTest extends TestCase
         $participant = Participant::find(1);
         $participatable = $participant->participatable;
 
-        $chat = factory(Chat::class)->create();
+        $room = factory(Room::class)->create();
 
-        $participatable->joinRoom($chat);
+        $participatable->joinRoom($room);
 
 
-        $this->assertCount(1, $participatable->allChats());
+        $this->assertCount(1, $participatable->allRooms());
     }
     /** @test */
     public function a_participant_can_join_channel()
@@ -42,11 +41,11 @@ class ParticipantTest extends TestCase
         $participant = factory(Participant::class)->create();
 
         $participatable = $participant->participatable;
-        $channel = factory(Channel::class)->create();
+        $room = factory(Room::class)->create();
 
-        $participatable->joinRoom($channel);
+        $participatable->joinRoom($room);
 
-        $this->assertCount(1, $participatable->allChannels());
+        $this->assertCount(1, $participatable->allRooms());
     }
 
     /** @test */
@@ -54,44 +53,44 @@ class ParticipantTest extends TestCase
     {
         $participant = factory(Participant::class)->create();
         $participatable = $participant->participatable;
-        $chat = factory(Chat::class)->create();
+        $room = factory(Room::class)->create();
 
-        $chatRoom = $participatable->joinRoom($chat);
+        $roomRoom = $participatable->joinRoom($room);
 
-        $participatable->sendMessage($chatRoom, 'hello');
+        $participatable->sendMessage($roomRoom, 'hello');
 
-        $this->assertCount(1, $chatRoom->messages);
+        $this->assertCount(1, $roomRoom->messages);
     }
     /** @test */
     public function a_participant_can_send_messages_in_channel()
     {
         $participant = factory(Participant::class)->create();
         $participatable = $participant->participatable;
-        $channel = factory(Chat::class)->create();
+        $room = factory(Room::class)->create();
 
-        $channelRoom = $participatable->joinRoom($channel);
+        $roomRoom = $participatable->joinRoom($room);
 
-        $participatable->sendMessage($channelRoom, 'hello');
+        $participatable->sendMessage($roomRoom, 'hello');
 
-        $this->assertCount(1, $channelRoom->messages);
+        $this->assertCount(1, $roomRoom->messages);
     }
     /** @test */
     public function participant_can_make_chat()
     {
         $participant = factory(Participant::class)->create();
         $participatable = $participant->participatable;
-        $participatable->createChat('my new chat', 'my description');
+        $participatable->createRoom('my new chat', 'my description');
 
-        $this->assertCount(1, $participatable->allChats());
+        $this->assertCount(1, $participatable->allRooms());
     }
     /** @test */
     public function participant_can_make_channel()
     {
         $participant = factory(Participant::class)->create();
         $participatable = $participant->participatable;
-        $participatable->createChat('my new channel', 'my description');
+        $participatable->createRoom('my new channel', 'my description');
 
-        $this->assertCount(1, $participatable->allChats());
+        $this->assertCount(1, $participatable->allRooms());
     }
     /** @test */
     public function only_autherized_participant_have_permissions()
@@ -99,22 +98,22 @@ class ParticipantTest extends TestCase
         $participant = factory(Participant::class)->create();
         $admin = $participant->participatable;
 
-        $chat = $admin->createChat('My secret chat', 'my secret description');
+        $room = $admin->createRoom('My secret chat', 'my secret description');
         $participants = factory(Participant::class, 3)->create();
 
-        $chat->setParticipants($participants);
+        $room->setParticipants($participants);
 
-        $chat->givePermissions($admin, 'Admin', $ability = 'DeleteChat');
+        $room->givePermissions($admin, 'Admin', $ability = 'DeleteRoom');
 
-        $this->assertCount(1, $admin->getAllParticipantAbilities($chat));
+        $this->assertCount(1, $admin->getAllParticipantAbilities($room));
         $this->actingAs($admin);
 
-        $this->assertTrue(Gate::forUser($admin)->allows($ability, $chat));
+        $this->assertTrue(Gate::forUser($admin)->allows($ability, $room));
 
-        $chat->givePermissions($admin, 'Admin', $ability2 = 'EditChat');
+        $room->givePermissions($admin, 'Admin', $ability2 = 'EditRoom');
 
-        $this->assertCount(2, $admin->getAllParticipantAbilities($chat));
-        $this->assertTrue(Gate::forUser($admin)->allows($ability2, $chat));
+        $this->assertCount(2, $admin->getAllParticipantAbilities($room));
+        $this->assertTrue(Gate::forUser($admin)->allows($ability2, $room));
     }
     /** @test */
 
@@ -122,12 +121,12 @@ class ParticipantTest extends TestCase
     {
         $participant2 = factory(Participant::class)->create();
         $notAdmin = $participant2->participatable;
-        $chat = $notAdmin->createChat('My secret chat', 'my secret description');
+        $room = $notAdmin->createRoom('My secret chat', 'my secret description');
 
-        $chat->setParticipants($participant2);
-        $ability = 'DeleteChat';
+        $room->setParticipants($participant2);
+        $ability = 'DeleteRoom';
         $this->actingAs($notAdmin);
-        $this->assertFalse(Gate::forUser($notAdmin)->allows($ability, $chat));
-        $this->assertCount(0, $notAdmin->getAllParticipantAbilities($chat));
+        $this->assertFalse(Gate::forUser($notAdmin)->allows($ability, $room));
+        $this->assertCount(0, $notAdmin->getAllParticipantAbilities($room));
     }
 }

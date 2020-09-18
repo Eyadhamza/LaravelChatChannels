@@ -1,11 +1,12 @@
 <?php
 
 
-namespace TheProfessor\Laravelchatchannels\Traits;
+namespace TheProfessor\Laravelrooms\Traits;
 
-use TheProfessor\Laravelchatchannels\Models\Channel;
-use TheProfessor\Laravelchatchannels\Models\Chat;
-use TheProfessor\Laravelchatchannels\Models\Participant;
+use TheProfessor\Laravelrooms\Models\Participant;
+use TheProfessor\Laravelrooms\Models\Room;
+
+
 
 trait Participate
 {
@@ -18,76 +19,63 @@ trait Participate
     }
     public function participant()
     {
-        return $this->morphOne('TheProfessor\Laravelchatchannels\Models\Participant', 'participatable');
+        return $this->morphOne('TheProfessor\Laravelroomchannels\Models\Participant', 'participatable');
     }
 
     public function joinRoom($room)
     {
-        if ($room instanceof Chat) {
-            $chat = Chat::find($room);
-            $this->asParticipant()->chats()->syncWithoutDetaching($chat);
+        $room = Room::find($room);
+        $this->asParticipant()->rooms()->syncWithoutDetaching($room);
+        return $room[0];
 
-            return $chat[0];
-        } else {
-            $channel = Channel::find($room);
-            $this->asParticipant()->channels()->syncWithoutDetaching($channel);
-
-            return $channel[0];
-        }
     }
 
     public function sendMessage($room, string $message)
     {
         return $room->addMessage($this->asParticipant()->id, $message);
     }
-    public function allChats()
+    public function allRooms()
     {
-        return $this->asParticipant()->chats()->get();
+        return $this->asParticipant()->rooms()->get();
     }
-    public function getParticipantChat($chat)
+    public function getParticipantRoom($room)
     {
-        return $this->asParticipant()->chats()->where('chat_id', $chat->id)->get()[0];
+        return $this->asParticipant()->rooms()->where('room_id', $room->id)->get()[0];
     }
-    public function allChannels()
+//    public function allChannels()
+//    {
+//        return $this->asParticipant()->channels()->get();
+//    }
+//    public function getParticipantChannel($channel)
+//    {
+//        return $this->asParticipant()->channels()->where('channel_id', $channel->id)->get()[0];
+//    }
+    public function createRoom(string $roomName, string $roomDescription)
     {
-        return $this->asParticipant()->channels()->get();
-    }
-    public function getParticipantChannel($channel)
-    {
-        return $this->asParticipant()->channels()->where('channel_id', $channel->id)->get()[0];
-    }
-    public function createChat(string $chatName, string $chatDescription)
-    {
-        $chat = $this->asParticipant()->chats()->create([
-            'name' => $chatName,
-            'description' => $chatDescription,
+        $room = $this->asParticipant()->rooms()->create([
+            'name' => $roomName,
+            'description' => $roomDescription,
         ]);
 
-        return $chat;
+        return $room;
     }
-    public function createChannel(string $channelName, string $channelDescription)
-    {
-        $channel = $this->asParticipant()->channels()->create([
-            'name' => $channelName,
-            'description' => $channelDescription,
-        ]);
-
-        return $channel;
-    }
+//    public function createChannel(string $channelName, string $channelDescription)
+//    {
+//        $channel = $this->asParticipant()->channels()->create([
+//            'name' => $channelName,
+//            'description' => $channelDescription,
+//        ]);
+//
+//        return $channel;
+//    }
     public function addRole($roleTitle, $room)
     {
-        if ($room instanceof Chat) {
-            return $this->getParticipantChat($room)->roles()->create([
+        return $this->getParticipantRoom($room)->roles()->create([
             'title' => $roleTitle,
-          ]);
-        } else {
-            return  $this->getParticipantChannel($room)->roles()->create([
-                'title' => $roleTitle,
-            ]);
-        }
+        ]);
     }
-    public function getAllParticipantAbilities($chat)
+    public function getAllParticipantAbilities($room)
     {
-        return $this->getParticipantChat($chat)->allAbilities();
+        return $this->getParticipantRoom($room)->allAbilities();
     }
 }
