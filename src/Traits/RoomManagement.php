@@ -79,12 +79,14 @@ trait RoomManagement
     }
     public function makePublic()
     {
-        $this->visibility='Public';
+        $this->visibility = 'Public';
+
         return $this;
     }
     public function makePrivate()
     {
-        $this->visibility='Private';
+        $this->visibility = 'Private';
+
         return $this;
     }
 

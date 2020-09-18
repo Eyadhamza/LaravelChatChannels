@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Gate;
 use TheProfessor\Laravelrooms\Models\Participant;
 use TheProfessor\Laravelrooms\Models\Room;
 
-
-
 trait Participate
 {
     public function asParticipant()
@@ -27,8 +25,8 @@ trait Participate
     {
         $room = Room::find($room);
         $this->asParticipant()->rooms()->syncWithoutDetaching($room);
-        return $room[0];
 
+        return $room[0];
     }
 
     public function sendMessage($room, string $message)
