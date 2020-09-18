@@ -4,7 +4,6 @@
 namespace TheProfessor\Laravelchatchannels\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Livewire\WithFileUploads;
 
 class Message extends Model
 {

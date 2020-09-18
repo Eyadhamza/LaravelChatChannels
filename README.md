@@ -100,11 +100,36 @@ $user=User::find(1);
 $chat=Chat::firstOrCreate(['name'=>'my room','description'=>'fancy']);
 $message='hello there';
 //sending a specific message to a certain room
+
 $user->sendMessage($chat,$message);
+
+//for sending image or images 
+
+$user->sendMessage($chat,$message,$imagesPaths);
+//the following is an example on how to achieve this using laravel livewire
+//to present the images in the view dont forget to decode the json 
+
+$body= $this->validate([
+            'messageBody'=>'required',
+            'photos.*' => 'image|max:1024|nullable', // 1MB Max
+        ]);
+        $name="";
+        $data=[];
+        foreach ($this->photos as $photo) {
+            $name=$photo->getClientOriginalName();
+            $photo->storeAs('public/photos',$name);
+            $path='/storage/photos/'.$name;
+            $data[]=$path;
+        }
+
+        $message=$this->chat->addMessage(auth()->user()->id,$body['messageBody'],json_encode($data));
+        
+ //files works in the same way using the forth parameter
+$user->sendMessage($chat,$message,null,$FileNames);
 
 ```
 for determing roles and abilities (in the chat itself of course)
-*dont worry won't be any contradictions with any table permissions in the app
+*dont worry there won't be any contradictions with any table permissions in the app
 ``` php
 //the second arg is the role name 
 //the third arg is the abilities given to that role

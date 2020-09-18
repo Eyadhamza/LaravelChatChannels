@@ -3,8 +3,6 @@
 
 namespace TheProfessor\Laravelchatchannels\Traits;
 
-use TheProfessor\Laravelchatchannels\Models\Channel;
-use TheProfessor\Laravelchatchannels\Models\Chat;
 use TheProfessor\Laravelchatchannels\Models\Participant;
 use TheProfessor\Laravelchatchannels\Models\RoomRoles;
 
@@ -14,11 +12,11 @@ trait RoomManagement
     {
         return $this->morphMany('TheProfessor\Laravelchatchannels\Models\Message', 'messagable');
     }
-    public function addMessage($sender, $messageBody,$images=null,$filenames=null)
+    public function addMessage($sender, $messageBody, $images = null, $filenames = null)
     {
-       return $this
+        return $this
             ->messages()
-            ->create(['sender_id' => $sender,'body' => $messageBody,'images'=>$images,'filenames'=>$filenames]);
+            ->create(['sender_id' => $sender,'body' => $messageBody,'images' => $images,'filenames' => $filenames]);
     }
     public function allMessages()
     {
@@ -62,22 +60,5 @@ trait RoomManagement
         return $this->roles
             ->map->abilities
             ->flatten()->pluck('title')->unique();
-    }
-    public function makePrivate()
-    {
-         $this->visibility='Private';
-         return $this;
-    }
-    public function makePublic()
-    {
-        $this->visibility='Public';
-        return $this;
-    }
-    public function searchGlobalRooms($roomName)
-    {
-        $query=[];
-        $query=Chat::where('name',$roomName);
-        $query=$query+Channel::where('name',$roomName);
-        dd($query);
     }
 }
