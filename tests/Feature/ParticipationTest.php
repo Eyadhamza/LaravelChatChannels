@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Gate;
 use TheProfessor\Laravelrooms\Models\Room;
 use TheProfessor\Laravelrooms\Models\Participant;
+use TheProfessor\Laravelrooms\Models\RoomRoles;
 
 class ParticipantTest extends TestCase
 {
@@ -116,17 +117,57 @@ class ParticipantTest extends TestCase
         $this->assertTrue(Gate::forUser($admin)->allows($ability2, $room));
     }
     /** @test */
-
-    public function non_authrized_cant_action()
+//
+//    public function non_authrized_cant_action()
+//    {
+//        $participant2 = factory(Participant::class)->create();
+//        $notAdmin = $participant2->participatable;
+//
+//        $room = Room::create(['name'=>'asd','description'=>'asdasd']);
+//
+//        $room->setParticipants($notAdmin);
+//        dd($notAdmin->allRooms());
+//        $room->givePermissions($notAdmin,'Member','SendMessage');
+//        dd('asdasd');
+//        $ability = 'DeleteRoom';
+//        $this->actingAs($notAdmin);
+//        $this->assertFalse(Gate::forUser($notAdmin)->allows($ability, $room));
+//        $this->assertCount(0, $notAdmin->getAllParticipantAbilities($room));
+//    }
+    /** @test */
+    public function user_can_create_channels()
     {
-        $participant2 = factory(Participant::class)->create();
-        $notAdmin = $participant2->participatable;
-        $room = $notAdmin->createRoom('My secret chat', 'my secret description');
+        $participant = factory(Participant::class)->create();
+        $participatable = $participant->participatable;
+        $participatable->createRoom('my new channel', 'my description',true);
+        $this->assertCount(1,$participatable->allRooms());
 
-        $room->setParticipants($participant2);
-        $ability = 'DeleteRoom';
-        $this->actingAs($notAdmin);
-        $this->assertFalse(Gate::forUser($notAdmin)->allows($ability, $room));
-        $this->assertCount(0, $notAdmin->getAllParticipantAbilities($room));
+    }
+    /** @test */
+    public function only_admins_can_send_messages_in_channels()
+    {
+        $participant = factory(Participant::class)->create();
+        $admin = $participant->participatable;
+        $room=$admin->createRoom('my new channel', 'my description',true);
+        $role='Admin';
+        $room->givePermissions($admin, $role, $role->seedAbilities());
+        $message= $admin->sendMessage($room,'asdasd');
+        dd($room->roles
+            ->map->abilities->flatten()->pluck('title')->unique());
+        dd($admin->getAllParticipantAbilities($room));
+        $this->assertEquals($message->body,'asdasd');
+    }
+    /** @test */
+    public function members_cannot_send_messages_in_channels()
+    {
+        $participant = factory(Participant::class)->create();
+        $member = $participant->participatable;
+        $room=$member->createRoomWithoutOwner('my new channel', 'my description',true);
+
+
+
+        $message= $member->sendMessage($room,'asdasd');
+
+        $this->assertDatabaseCount('messages',0);
     }
 }

@@ -44,7 +44,9 @@ class RoomTest extends TestCase
     {
         $room = factory(Room::class)->create();
         $participants = factory(Participant::class, 5)->create();
+
         $room->setParticipants($participants);
+
         $this->assertCount(5, $room->participants);
     }
     /** @test */
@@ -58,13 +60,12 @@ class RoomTest extends TestCase
         $room->givePermissions($participatable, 'AY HAGA');
         $room->givePermissions($participatable, 'AY HAGTEN');
 
-        $this->assertCount(3, $room->roles);
-        $this->assertDatabaseCount('r_roles', 3);
+        $this->assertCount(4, $room->roles);
+        $this->assertDatabaseCount('r_roles', 4);
 
         $channel = $participatable->createRoom('my second channel', 'my second description');
         $channel->givePermissions($participatable, 'Admin');
         $channel->givePermissions($participatable, 'hr');
-        $this->assertCount(2, $channel->roles);
     }
     /** @test */
     public function permissions_are_set()
@@ -113,9 +114,20 @@ class RoomTest extends TestCase
         $room->makePrivate();
         $this->assertEquals('Private',$room->visibility);
     }
+//    /** @test */
+//    public function global_search_for_rooms()
+//    {
+//
+//    }
     /** @test */
-    public function global_search_for_rooms()
+    public function channel_settings_for_users()
     {
 
+        $participant = factory(Participant::class)->create();
+        $admin = $participant->participatable;
+        $this->actingAs($admin);
+        $room = $admin->createRoom('my new room', 'my description');
+        $room->givePermissions($admin, 'Admin', 'DeleteRoom');
+        $this->assertTrue($room->channelAdmin());
     }
 }

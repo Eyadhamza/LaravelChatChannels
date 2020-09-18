@@ -3,6 +3,7 @@
 
 namespace TheProfessor\Laravelrooms\Traits;
 
+use Illuminate\Support\Facades\Gate;
 use TheProfessor\Laravelrooms\Models\Participant;
 use TheProfessor\Laravelrooms\Models\Room;
 
@@ -19,7 +20,7 @@ trait Participate
     }
     public function participant()
     {
-        return $this->morphOne('TheProfessor\Laravelroomchannels\Models\Participant', 'participatable');
+        return $this->morphOne('TheProfessor\Laravelrooms\Models\Participant', 'participatable');
     }
 
     public function joinRoom($room)
@@ -32,7 +33,22 @@ trait Participate
 
     public function sendMessage($room, string $message)
     {
-        return $room->addMessage($this->asParticipant()->id, $message);
+
+        if ($room->isChannel){
+
+            if (Gate::forUser(auth()->user())->allows('SendMessage', $room)){
+
+                return $room->addMessage($this->asParticipant()->id, $message);
+            }
+            else{
+
+                return 403;
+            }
+        }
+        else{
+            return $room->addMessage($this->asParticipant()->id, $message);
+
+        }
     }
     public function allRooms()
     {
@@ -42,34 +58,34 @@ trait Participate
     {
         return $this->asParticipant()->rooms()->where('room_id', $room->id)->get()[0];
     }
-//    public function allChannels()
-//    {
-//        return $this->asParticipant()->channels()->get();
-//    }
-//    public function getParticipantChannel($channel)
-//    {
-//        return $this->asParticipant()->channels()->where('channel_id', $channel->id)->get()[0];
-//    }
-    public function createRoom(string $roomName, string $roomDescription)
+
+    public function createRoom(string $roomName, string $roomDescription,bool $isChannel=false)
     {
         $room = $this->asParticipant()->rooms()->create([
             'name' => $roomName,
             'description' => $roomDescription,
+            'isChannel'=>$isChannel
+        ]);
+
+        $room->givePermissions($this,'Owner');
+
+        return $room;
+    }
+    public function createRoomWithoutOwner(string $roomName, string $roomDescription,bool $isChannel=false)
+    {
+        $room = $this->asParticipant()->rooms()->create([
+            'name' => $roomName,
+            'description' => $roomDescription,
+            'isChannel'=>$isChannel
         ]);
 
         return $room;
     }
-//    public function createChannel(string $channelName, string $channelDescription)
-//    {
-//        $channel = $this->asParticipant()->channels()->create([
-//            'name' => $channelName,
-//            'description' => $channelDescription,
-//        ]);
-//
-//        return $channel;
-//    }
+
+
     public function addRole($roleTitle, $room)
     {
+
         return $this->getParticipantRoom($room)->roles()->create([
             'title' => $roleTitle,
         ]);
@@ -77,5 +93,9 @@ trait Participate
     public function getAllParticipantAbilities($room)
     {
         return $this->getParticipantRoom($room)->allAbilities();
+    }
+    public function getAllParticipantRoles($room)
+    {
+        return $this->getParticipantRoom($room)->allRoles();
     }
 }

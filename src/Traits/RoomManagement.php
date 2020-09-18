@@ -8,6 +8,7 @@ use TheProfessor\Laravelrooms\Models\RoomRoles;
 
 trait RoomManagement
 {
+
     public function messages()
     {
         return $this->morphMany('TheProfessor\Laravelrooms\Models\Message', 'messagable');
@@ -31,9 +32,10 @@ trait RoomManagement
         $this->participants()->attach($participants);
         $participants->each(function ($participant) {
             Participant::create([
-                'participatable_type' => 'App/Models/'.class_basename($participant),
+                'participatable_type' => class_basename($participant),
                 'participatable_id' => $participant->id,
             ]);
+
         });
 
         return $this;
@@ -46,20 +48,30 @@ trait RoomManagement
     }
     public function givePermissions($participant, string $roleTitle, $ability = [])
     {
+
         $role = $participant->addRole($roleTitle, $this);
 
-        (new RoomRoles())->seedAbilities();
+        $allAbilities=(new RoomRoles())->seedAbilities();
 
-        $role->allowTo($ability);
+
+            $role->allowTo($ability);
 
         return $role;
     }
 
     public function allAbilities()
     {
+
         return $this->roles
             ->map->abilities
             ->flatten()->pluck('title')->unique();
+    }
+    public function allRoles()
+    {
+        return $this->roles
+            ->map
+            ->pluck('title')
+            ->unique();
     }
     public function makePublic()
     {
@@ -70,5 +82,17 @@ trait RoomManagement
     {
         $this->visibility='Private';
         return $this;
+    }
+
+    public function channelAdmin():bool
+    {
+        $participant=Participant::where('id',auth()->id())->get()[0];
+
+        $admin = $participant->participatable;
+
+        $adminRoles=$admin->getAllParticipantRoles($this)[0];
+
+        return $adminRoles->contains('Admin')||$adminRoles->contains('Owner');
+
     }
 }
