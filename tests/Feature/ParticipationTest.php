@@ -4,8 +4,8 @@ namespace TheProfessor\Laravelrooms\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Gate;
-use TheProfessor\Laravelrooms\Models\Room;
 use TheProfessor\Laravelrooms\Models\Participant;
+use TheProfessor\Laravelrooms\Models\Room;
 
 class ParticipantTest extends TestCase
 {
