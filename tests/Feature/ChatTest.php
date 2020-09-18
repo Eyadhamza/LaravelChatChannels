@@ -109,13 +109,12 @@ class ChatTest extends TestCase
         $participatable = $participant->participatable;
         $chat = $participatable->createChat('my new chat', 'my description');
         $chat->makePublic();
-        $this->assertEquals('Public',$chat->visibility);
+        $this->assertEquals('Public', $chat->visibility);
         $chat->makePrivate();
-        $this->assertEquals('Private',$chat->visibility);
+        $this->assertEquals('Private', $chat->visibility);
     }
     /** @test */
     public function global_search_for_rooms()
     {
-
     }
 }
